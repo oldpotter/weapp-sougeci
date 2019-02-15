@@ -1,0 +1,7 @@
+<!--components/klsearch/klsearch.wxml-->
+<view class='box'>
+  <view class='bg'>
+    <image class='img' src='./search.png'></image>
+    <input class='input' focus='{{focus}}' placeholder='{{holder}}' bindinput='input'></input>
+  </view>
+</view>

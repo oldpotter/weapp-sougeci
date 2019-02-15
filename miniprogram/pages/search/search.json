@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+		"kl-search": "../../components/klsearch/klsearch",
+		"i-cell-group": "../../components/iview/cell-group/index",
+		"i-cell": "../../components/iview/cell/index",
+		"i-message": "../../components/iview/message/index"
+	}
+}

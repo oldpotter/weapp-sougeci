@@ -1,0 +1,7 @@
+<!--miniprogram/pages/search/search.wxml-->
+<kl-search holder="搜索歌手、歌曲" focus='{{isSearching}}' bind:klsearch='doSearch'/>
+<i-cell-group>
+	<block wx:for='{{songs}}' wx:for-item='song'>
+		<i-cell title='{{song.name}}' label='{{song.album}} -- {{song.artist}}'></i-cell>
+	</block>
+</i-cell-group>

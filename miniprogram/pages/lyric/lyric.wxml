@@ -1,0 +1,10 @@
+<!--miniprogram/pages/lyric/lyric.wxml-->
+<view style='display: flex;'>
+  <view style='padding: 20rpx 40rpx; margin-bottom: 150rpx;'>
+    <text class='lyric'>{{lyric}}</text>
+  </view>
+  <view class='btn-box'>
+    <i-button inline size='small' type='primary' bind:click='copy' disabled='{{!lyric}}'>复制</i-button>
+    <i-button inline size='small' type='success' bind:click='collect' disabled='{{!lyric}}' loading='{{loading}}'>{{db_id?"取消收藏":"收藏"}}</i-button>
+  </view>
+</view>

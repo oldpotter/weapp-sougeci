@@ -1,0 +1,16 @@
+/* miniprogram/pages/lyric/lyric.wxss */
+
+.btn-box {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #f8f8f9;
+}
+
+.lyric {
+  line-height: 24px;
+  font-size: 14px;
+}

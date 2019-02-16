@@ -1,7 +1,19 @@
 <!--components/klsearch/klsearch.wxml-->
-<view class='box'>
-  <view class='bg'>
-    <image class='img' src='./search.png'></image>
-    <input class='input' focus='{{focus}}' placeholder='{{holder}}' bindinput='input'></input>
+<block wx:if='{{static}}'>
+  <navigator url='{{url}}'>
+    <view class='box'>
+      <view class='bg'>
+        <image class='img' src='./search.png'></image>
+        <text style='color:#80848f'>{{holder}}</text>
+      </view>
+    </view>
+  </navigator>
+</block>
+<block wx:else>
+  <view class='box'>
+    <view class='bg'>
+      <image class='img' src='./search.png'></image>
+      <input class='input' focus='{{focus}}' placeholder='{{holder}}' bindinput='input' disabled='{{static}}'></input>
+    </view>
   </view>
-</view>
+</block>

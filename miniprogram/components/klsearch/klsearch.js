@@ -1,7 +1,9 @@
 Component({
 	properties:{
 		holder:String,
-		focus:Boolean
+		focus:Boolean,
+		static: Boolean,
+		url: String
 	},
 	search: undefined,
 	methods: {

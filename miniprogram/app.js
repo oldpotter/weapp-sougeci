@@ -1,4 +1,5 @@
 //app.js
+const config = require('./config.js')
 App({
   onLaunch: function () {
     
@@ -7,9 +8,12 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
+				env: config.debug ? 'dev-904dcd' : 'prod-904dcd'
       })
     }
 
-    this.globalData = {}
+    this.globalData = {
+			db: wx.cloud.database()
+		}
   }
 })

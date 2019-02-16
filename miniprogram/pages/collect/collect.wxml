@@ -1,0 +1,8 @@
+<!--miniprogram/pages/collect/collect.wxml-->
+<kl-search holder="搜索" static='true' url='../search/search'/>
+<i-cell-group>
+	<block wx:for='{{list}}' wx:for-item='song' wx:key='song._id'>
+		<i-cell title='{{song.name}}' label='{{song.album}} -- {{song.artist}}' is-link url='../lyric/lyric?id={{song.songId}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}&db_id={{song._id}}'></i-cell>
+	</block>
+</i-cell-group>
+<i-load-more tip='{{tip}}' loading='{{loading}}'/>

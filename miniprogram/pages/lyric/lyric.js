@@ -6,17 +6,20 @@ Page({
     artist: null,
     lyric: null,
     loading: false,//收藏按钮状态
-		db_id: null
+		db_id: null,
+		fontSize: 10,
   },
 
   onLoad(e) {
 		// console.log(e)
+
     this.setData({
       id: e.songId || e.id,
       name: e.name,
       album: e.album,
       artist: e.artist,
-			db_id: e.db_id
+			db_id: e.db_id,
+			fontSize: getApp().globalData.fontSize
     })
     this.getLyric(this.data.id)
   },

@@ -12,7 +12,8 @@ Page({
     this.getList().then(res => {
       _this.setData({
         list: res,
-        offset: res.length
+        offset: res.length,
+				tip: res.length > 0 ? '':'暂时没有数据'
       })
     })
   },

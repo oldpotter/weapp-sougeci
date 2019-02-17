@@ -16,7 +16,6 @@ Page({
       fail: function(res) {},
       complete: function(res) {},
     })
-    //调试api
     wx.cloud.callFunction({
       name: 'search',
       data: {
@@ -48,6 +47,12 @@ Page({
         console.error(err)
       }
     })
-
+		const db = getApp().globalData.db
+		db.collection('logs').add({
+			data: {
+				keyword,
+				date: db.serverDate()
+			},
+		})
   }
 })

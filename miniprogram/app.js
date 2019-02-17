@@ -13,7 +13,15 @@ App({
     }
 
     this.globalData = {
-			db: wx.cloud.database()
+			db: wx.cloud.database(),
+			fontSize: 10
 		}
+		const _this = this
+		wx.getSystemInfo({
+			success: function(res) {
+				// console.log(resfontSizeSetting)
+				_this.globalData.fontSize = res.fontSizeSetting
+			},
+		})
   }
 })

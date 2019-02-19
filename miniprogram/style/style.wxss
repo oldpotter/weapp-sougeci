@@ -1,0 +1,15 @@
+.primary{
+	color: #2d8cf0; 
+}
+
+.light-primary{
+	color: #5cadff;
+}
+
+.title{
+	color: #1c2438;
+}
+
+.content{
+	color: #495060;
+}

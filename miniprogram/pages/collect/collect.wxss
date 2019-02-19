@@ -1,1 +1,2 @@
 /* miniprogram/pages/collect/collect.wxss */
+@import "/style/style.wxss"

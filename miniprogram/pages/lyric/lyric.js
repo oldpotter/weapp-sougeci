@@ -17,7 +17,7 @@ Page({
       name: e.name,
       album: e.album,
       artist: e.artist,
-      db_id: e.db_id,
+      db_id: e.db_id ? e.db_id : null,
       fontSize: getApp().globalData.fontSize
     })
     this.getLyric(this.data.id)
@@ -106,8 +106,7 @@ Page({
 
   getLyric(id) {
     const _this = this
-		wx.showLoading({
-		})
+    wx.showLoading({})
     wx.cloud.callFunction({
       name: 'lyric',
       data: {
@@ -139,7 +138,7 @@ Page({
             lyric
           })
         }
-				wx.hideLoading()
+        wx.hideLoading()
       }
     })
   }

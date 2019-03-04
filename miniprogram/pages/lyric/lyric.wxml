@@ -1,7 +1,7 @@
 <!--miniprogram/pages/lyric/lyric.wxml-->
 <view style='display: flex;'>
   <view style='padding: 20rpx 40rpx; margin-bottom: 150rpx;'>
-    <text class='lyric' style='font-size:{{fontSize}}px'>{{lyric}}</text>
+    <text class='lyric' style='font-size:{{fontSize}}px' selectable>{{lyric}}</text>
   </view>
   <view class='btn-box'>
     <i-button inline size='small' type='primary' bind:click='copy' disabled='{{!lyric}}'>复制</i-button>

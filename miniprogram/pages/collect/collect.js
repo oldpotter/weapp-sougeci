@@ -44,6 +44,7 @@ Page({
         db.collection('lyrics')
           .limit(limit)
           .skip(skip)
+					.orderBy('date', 'desc')
           .get({
             success(res) {
               resolve(res.data)
@@ -52,6 +53,7 @@ Page({
       } else {
         db.collection('lyrics')
           .limit(limit)
+					.orderBy('date', 'desc')
           .get({
             success(res) {
               resolve(res.data)

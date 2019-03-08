@@ -5,6 +5,9 @@
   </view>
   <view class='btn-box'>
     <i-button inline size='small' type='primary' bind:click='copy' disabled='{{!lyric}}'>复制</i-button>
+    <i-button inline size='small' type='info' bind:click='push' disabled='{{!lyric}}' loading='{{pushingLyric}}'>{{pushingLyric?"请稍后":"浏览器中查看"}}</i-button>
     <i-button inline size='small' type='success' bind:click='collect' disabled='{{!lyric}}' loading='{{loading}}'>{{db_id?"取消收藏":"收藏"}}</i-button>
+
   </view>
 </view>
+<i-message id="message" />

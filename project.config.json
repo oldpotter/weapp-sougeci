@@ -12,7 +12,7 @@
 	},
 	"appid": "wx37c195cd3224b69d",
 	"projectname": "sougeci",
-	"libVersion": "2.2.5",
+	"libVersion": "2.6.2",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -30,12 +30,19 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": -1,
 					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/test/test",
+					"scene": null
 				}
 			]
 		}

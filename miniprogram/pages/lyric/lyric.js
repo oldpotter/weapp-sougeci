@@ -1,3 +1,6 @@
+import {debug} from '../../config.js'
+const { $Message } = require('../../components/iview/base/index.js')
+const url = debug ?'http://192.168.124.56:5000/lyric':'https://shenkeling.top/lyric'
 Page({
   data: {
     id: null,
@@ -8,6 +11,7 @@ Page({
     loading: false, //收藏按钮状态
     db_id: null,
     fontSize: 10,
+    pushingLyric: false //推送歌词到shenkeling.top
   },
 
   onLoad(e) {
@@ -21,6 +25,9 @@ Page({
       fontSize: getApp().globalData.fontSize
     })
     this.getLyric(this.data.id)
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
 
   copy() {
@@ -69,7 +76,8 @@ Page({
             name: _this.data.name,
             album: _this.data.album,
             artist: _this.data.artist,
-            lyric: _this.data.lyric
+            lyric: _this.data.lyric,
+            date: db.serverDate()
           },
 
           success(res) {
@@ -141,5 +149,39 @@ Page({
         wx.hideLoading()
       }
     })
+  },
+
+  //推送歌词到shenkeling.top
+  push() {
+		const _this = this
+    this.setData({
+      pushingLyric: true
+    })
+		
+		wx.request({
+			url: `${url}/pushlyric`,
+			data: {
+				lyric:{
+					name: _this.data.name,
+					album: _this.data.album,
+					artist: _this.data.artist,
+					lyric: _this.data.lyric
+				}
+			},
+			header: {},
+			method: 'POST',
+			dataType: 'json',
+			responseType: 'text',
+			success: function(res) {
+				_this.setData({ pushingLyric: false })
+				$Message({
+					content: `请访问${url}查看`,
+					type:'success',
+					duration: 10
+				});
+			},
+			fail: function(res) {},
+			complete: function(res) {},
+		})
   }
 })

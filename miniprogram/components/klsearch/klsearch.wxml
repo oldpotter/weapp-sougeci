@@ -13,7 +13,8 @@
   <view class='box'>
     <view class='bg'>
       <image class='img' src='./search.png'></image>
-      <input class='input' focus='{{focus}}' placeholder='{{holder}}' bindinput='input' disabled='{{static}}'></input>
+      <input class='input' focus='{{focus}}' placeholder='{{holder}}' bindinput='input' disabled='{{static}}' value='{{ value }}'></input>
+			<image hidden='{{ !value }}' class='img' src='./close.png' bindtap='clear' ></image>
     </view>
   </view>
 </block>

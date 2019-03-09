@@ -9,13 +9,7 @@ Page({
     if (keyword.length == 0) {
       return
     }
-    wx.showLoading({
-      title: '',
-      mask: true,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+    wx.showLoading({})
     wx.cloud.callFunction({
       name: 'search',
       data: {

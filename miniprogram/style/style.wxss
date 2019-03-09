@@ -13,3 +13,7 @@
 .content{
 	color: #495060;
 }
+
+.sub-color{
+	color:#80848f;
+}

@@ -1,9 +1,18 @@
 <!--miniprogram/pages/search/search.wxml-->
-<kl-search holder="搜索歌手、歌曲" focus bind:klsearch='doSearch'/>
+<kl-search holder="搜索歌手、歌曲" focus bind:klsearch='doSearch' />
+<block wx:if='{{ songs.length == 0 }}'>
+  <i-panel title="用户体验交流群">
+    <image src='{{ src }}' mode='aspectFit' style='margin: 20rpx;'></image>
+    <view style='display:flex;flex-direction:row-reverse;'>
+      <i-button inline size='small' type='primary' bind:click='save'>保存二维码</i-button>
+    </view>
+  </i-panel>
+</block>
 <i-cell-group>
-	<block wx:for='{{songs}}' wx:for-item='song' wx:key='song.id'>
-		<i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.id}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}'>
-	<view class='light-primary' slot='footer'>{{ song.artist }}</view>
-		</i-cell>
-	</block>
+  <block wx:for='{{songs}}' wx:for-item='song' wx:key='song.id'>
+    <i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.id}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}'>
+      <view class='light-primary' slot='footer'>{{ song.artist }}</view>
+    </i-cell>
+  </block>
 </i-cell-group>
+<i-message id="message" />

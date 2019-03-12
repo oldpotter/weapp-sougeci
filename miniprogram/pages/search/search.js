@@ -1,6 +1,7 @@
 Page({
   data: {
-    songs: []
+    songs: [],
+		src: 'https://shenkeling.top/files/1.jpeg'
   },
 
   doSearch(e) {
@@ -48,5 +49,26 @@ Page({
 				date: db.serverDate()
 			},
 		})
-  }
+  },
+
+	save(){
+		const _this = this
+		wx.downloadFile({
+			url: _this.data.src,
+			header: {},
+			success: function(res) {
+				wx.saveImageToPhotosAlbum({
+					filePath: res.tempFilePath,
+					success: function(res) {
+						wx.showToast({
+							title: '保存成功',
+							duration: 1000
+						})
+					},
+				})
+			},
+			fail: function(res) {},
+			complete: function(res) {},
+		})
+	}
 })

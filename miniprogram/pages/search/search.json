@@ -5,6 +5,7 @@
 		"i-cell": "../../components/iview/cell/index",
 		"i-message": "../../components/iview/message/index",
 		"i-panel": "../../components/iview/panel/index",
-		"i-button": "../../components/iview/button/index"
+		"i-button": "../../components/iview/button/index",
+		"i-load-more": "../../components/iview/load-more/index"
 	}
 }

@@ -1,6 +1,6 @@
 import {debug} from '../../config.js'
 const { $Message } = require('../../components/iview/base/index.js')
-const url = debug ?'http://192.168.124.56:5000/lyric':'https://shenkeling.top/lyric'
+const url = debug ?'http://192.168.31.99:5000/lyric':'https://shenkeling.top/lyric'
 Page({
   data: {
     id: null,

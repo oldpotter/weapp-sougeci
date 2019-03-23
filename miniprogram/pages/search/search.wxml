@@ -15,4 +15,5 @@
     </i-cell>
   </block>
 </i-cell-group>
+<i-load-more tip='{{tip}}' loading='{{loading}}'/>
 <i-message id="message" />

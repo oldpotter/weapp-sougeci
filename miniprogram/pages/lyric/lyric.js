@@ -1,6 +1,10 @@
-import {debug} from '../../config.js'
-const { $Message } = require('../../components/iview/base/index.js')
-const url = debug ?'http://192.168.31.99:5000/lyric':'https://shenkeling.top/lyric'
+import {
+  debug
+} from '../../config.js'
+const {
+  $Message
+} = require('../../components/iview/base/index.js')
+const url = debug ? 'http://192.168.31.99:5000/lyric' : 'https://shenkeling.top/lyric'
 Page({
   data: {
     id: null,
@@ -8,6 +12,8 @@ Page({
     album: null,
     artist: null,
     lyric: '',
+    lyricArray: [],
+    ableToSelected: false,
     loading: false, //收藏按钮状态
     db_id: null,
     fontSize: 10,
@@ -32,9 +38,52 @@ Page({
 
   copy() {
     const _this = this
+    wx.showActionSheet({
+      itemList: ['复制全部', '选择复制'],
+      itemColor: '',
+      success: function(res) {
+        if (res.tapIndex == 0) { //复制全部
+          wx.setClipboardData({
+            data: _this.data.lyric,
+            success: function(res) {},
+            fail: function(res) {},
+            complete: function(res) {},
+          })
+        } else {
+          _this.setData({
+            ableToSelected: true
+          })
+        }
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+
+  //点击一行歌词
+  tap(e) {
+    const index = e.currentTarget.dataset.index
+    const param = `lyricArray[${index}].checked`
+    this.setData({
+      [param]: !this.data.lyricArray[index].checked
+    })
+  },
+
+  //确认复制内容
+  toCopy() {
+    const _this = this
+    const lyric = this.data.lyricArray.filter(item => item.checked).map(item => item.content).join('\n')
     wx.setClipboardData({
-      data: _this.data.lyric,
-      success: function(res) {},
+      data: lyric,
+      success: function(res) {
+        const lyricArray = _this.data.lyricArray
+				lyricArray.forEach(item => item.checked = false)
+				console.log(lyricArray)
+        _this.setData({
+          lyricArray,
+          ableToSelected: false
+        })
+      },
       fail: function(res) {},
       complete: function(res) {},
     })
@@ -142,8 +191,15 @@ Page({
         } else {
           const lyric = res.lrc.lyric
             .replace(/\[[\d.:]+\]/g, '')
+          const lyricArray = lyric.split('\n').map(l => {
+            return {
+              checked: false,
+              content: l
+            }
+          })
           _this.setData({
-            lyric
+            lyric,
+            lyricArray
           })
         }
         wx.hideLoading()
@@ -153,35 +209,37 @@ Page({
 
   //推送歌词到shenkeling.top
   push() {
-		const _this = this
+    const _this = this
     this.setData({
       pushingLyric: true
     })
-		
-		wx.request({
-			url: `${url}/pushlyric`,
-			data: {
-				lyric:{
-					name: _this.data.name,
-					album: _this.data.album,
-					artist: _this.data.artist,
-					lyric: _this.data.lyric
-				}
-			},
-			header: {},
-			method: 'POST',
-			dataType: 'json',
-			responseType: 'text',
-			success: function(res) {
-				_this.setData({ pushingLyric: false })
-				$Message({
-					content: `请访问${url}查看`,
-					type:'success',
-					duration: 10
-				});
-			},
-			fail: function(res) {},
-			complete: function(res) {},
-		})
+
+    wx.request({
+      url: `${url}/pushlyric`,
+      data: {
+        lyric: {
+          name: _this.data.name,
+          album: _this.data.album,
+          artist: _this.data.artist,
+          lyric: _this.data.lyric
+        }
+      },
+      header: {},
+      method: 'POST',
+      dataType: 'json',
+      responseType: 'text',
+      success: function(res) {
+        _this.setData({
+          pushingLyric: false
+        })
+        $Message({
+          content: `请访问${url}查看`,
+          type: 'success',
+          duration: 10
+        });
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   }
 })

@@ -1,13 +1,28 @@
 <!--miniprogram/pages/lyric/lyric.wxml-->
-<view style='display: flex;'>
+<i-panel>
   <view style='padding: 20rpx 40rpx; margin-bottom: 150rpx;'>
-    <text class='lyric' style='font-size:{{fontSize}}px' selectable>{{lyric}}</text>
+    <block wx:for='{{ lyricArray }}' wx:for-key='*this'>
+      <label bindtap='tap' data-index='{{ index }}'>
+        <view style='display:{{ ableToSelected ? "inline":"none" }}'>
+          <i-icon type="success_fill" size="{{fontSize*1.3}}" color="{{ item.checked?'#5cadff':'#80848f' }}" />
+        </view>
+        <text selectable class='lyric' style='font-size:{{fontSize}}px'>{{ item.content + '\n' }}</text>
+      </label>
+    </block>
   </view>
   <view class='btn-box'>
-    <i-button inline size='small' type='primary' bind:click='copy' disabled='{{!lyric}}'>复制</i-button>
-    <i-button inline size='small' type='info' bind:click='push' disabled='{{!lyric}}' loading='{{pushingLyric}}'>{{pushingLyric?"请稍后":"浏览器中查看"}}</i-button>
-    <i-button inline size='small' type='success' bind:click='collect' disabled='{{!lyric}}' loading='{{loading}}'>{{db_id?"取消收藏":"收藏"}}</i-button>
-
+    <view hidden='{{ !ableToSelected }}'>
+      <i-button inline size='small' type='primary' bindtap='toCopy'>确定</i-button>
+    </view>
+    <view hidden='{{ ableToSelected }}'>
+      <i-button inline size='small' type='primary' bind:click='copy' disabled='{{!lyric}}'>复制</i-button>
+    </view>
+    <view hidden='{{ ableToSelected }}'>
+      <i-button inline size='small' type='info' bind:click='push' disabled='{{!lyric}}' loading='{{pushingLyric}}'>{{pushingLyric?"请稍后":"浏览器中查看"}}</i-button>
+    </view>
+    <view hidden='{{ ableToSelected }}'>
+      <i-button inline size='small' type='success' bind:click='collect' disabled='{{!lyric}}' loading='{{loading}}'>{{db_id?"取消收藏":"收藏"}}</i-button>
+    </view>
   </view>
-</view>
+</i-panel>
 <i-message id="message" />

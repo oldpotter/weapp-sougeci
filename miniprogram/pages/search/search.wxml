@@ -1,11 +1,7 @@
 <!--miniprogram/pages/search/search.wxml-->
 <kl-search holder="搜索歌手、歌曲" focus bind:klsearch='doSearch' />
 <block wx:if='{{ songs.length == 0 }}'>
-  <i-panel title="用户体验交流群">
-    <image src='{{ src }}' mode='aspectFit' style='margin: 20rpx;'></image>
-    <view style='display:flex;flex-direction:row-reverse;'>
-      <i-button inline size='small' type='primary' bind:click='save'>保存二维码</i-button>
-    </view>
+  <i-panel title="有任何使用上的意见建议欢迎给我提，我的微信号：oldpotter">
   </i-panel>
 </block>
 <i-cell-group>

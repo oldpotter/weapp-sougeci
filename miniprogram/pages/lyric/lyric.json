@@ -1,6 +1,8 @@
 {
-  "usingComponents": {
+	"usingComponents": {
 		"i-button": "../../components/iview/button/index",
-		"i-message": "../../components/iview/message/index"
+		"i-message": "../../components/iview/message/index",
+		"i-icon": "../../components/iview/icon/index",
+		"i-panel": "../../components/iview/panel/index"
 	}
 }

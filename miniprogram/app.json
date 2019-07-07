@@ -11,5 +11,6 @@
 		"navigationBarBackgroundColor": "#F6F6F6",
 		"navigationBarTitleText": "搜歌词",
 		"navigationBarTextStyle": "black"
-	}
+	},
+	"sitemapLocation": "sitemap.json"
 }

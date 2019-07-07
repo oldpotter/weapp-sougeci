@@ -164,6 +164,46 @@ Page({
   getLyric(id) {
     const _this = this
     wx.showLoading({})
+		wx.request({
+			url: 'https://shenkeling.top:3000/lyric?id=' + _this.data.id,
+			success: function(res) {
+				// console.log(res)
+				if (!res.data.lrc || res.data.lrc.lyric.length < 0) {
+					//没有歌词
+					wx.showModal({
+						title: '没有歌词',
+						content: '',
+						showCancel: false,
+						cancelText: '',
+						cancelColor: '',
+						confirmText: '确定',
+						confirmColor: '',
+						success: function (res) {
+							wx.navigateBack({
+								delta: 1,
+							})
+						},
+					})
+				} else {
+					const lyric = res.data.lrc.lyric
+						.replace(/\[[\d.:]+\]/g, '')
+					const lyricArray = lyric.split('\n').map(l => {
+						return {
+							checked: false,
+							content: l
+						}
+					})
+					_this.setData({
+						lyric,
+						lyricArray
+					})
+				}
+				wx.hideLoading()
+			},
+			fail: function(res) {},
+			complete: function(res) {},
+		})
+		/*
     wx.cloud.callFunction({
       name: 'lyric',
       data: {
@@ -205,6 +245,7 @@ Page({
         wx.hideLoading()
       }
     })
+		*/
   },
 
   //推送歌词到shenkeling.top

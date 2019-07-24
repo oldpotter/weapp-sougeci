@@ -1,5 +1,4 @@
 /* miniprogram/pages/lyric/lyric.wxss */
-@import "/style/style.wxss";
 .btn-box {
   position: fixed;
   bottom: 0;

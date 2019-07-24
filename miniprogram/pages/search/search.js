@@ -14,7 +14,7 @@ Page({
     this.setData({
       loading: true
     })
-		/*
+    /*
     wx.cloud.callFunction({
       name: 'search',
       data: {
@@ -53,36 +53,47 @@ Page({
         console.error(err)
       }
     })*/
-		wx.request({
-			url: `https://shenkeling.top:3000/search?keywords=${_this.data.keyword}&limit=${limit}&offset=${_this.data.offset}`,
-			success: function(res) {
-				if (res.data.result.songCount > 0) {
-					let songs = res.data.result.songs.map(song => {
-						return {
-							id: song.id,
-							name: song.name,
-							album: song.album.name,
-							artist: song.artists[0].name
-						}
-					})
-					const offset = _this.data.offset + songs.length
-					songs = _this.data.songs.concat(songs)
-					_this.setData({
-						songs,
-						loading: false,
-						offset
-					})
-				} else {
-					_this.setData({
-						loading: false,
-						tip: '无更多数据'
-					})
-				}
-				wx.hideLoading()
-			},
-			fail: function(res) {},
-			complete: function(res) {},
-		})
+    wx.request({
+      url: `https://shenkeling.top:3000/search?keywords=${_this.data.keyword}&limit=${limit}&offset=${_this.data.offset}`,
+      success: function(res) {
+        if (res.data.result.songCount > 0) {
+          let songs = res.data.result.songs.map(song => {
+            return {
+              id: song.id,
+              name: song.name,
+              album: song.album.name,
+              artist: song.artists[0].name
+            }
+          })
+          const offset = _this.data.offset + songs.length
+          songs = _this.data.songs.concat(songs)
+          _this.setData({
+            songs,
+            loading: false,
+            offset
+          })
+        } else {
+          _this.setData({
+            loading: false,
+            tip: '无更多数据'
+          })
+        }
+        wx.hideLoading()
+      },
+      fail: function(res) {
+        wx.showToast({
+          title: '出错啦',
+          icon: 'error',
+          image: '',
+          duration: 2000,
+          mask: true,
+          success: function(res) {},
+          fail: function(res) {},
+          complete: function(res) {},
+        })
+      },
+      complete: function(res) {},
+    })
   },
 
   doSearch(e) {
@@ -96,7 +107,7 @@ Page({
       offset: 0,
       keyword
     })
-		/*
+    /*
     wx.cloud.callFunction({
       name: 'search',
       data: {
@@ -134,33 +145,44 @@ Page({
       }
     })
 		*/
-		wx.request({
-			url: `https://shenkeling.top:3000/search?keywords=${keyword}&limit=${limit}&offset=${_this.data.offset}`,
-			success: function(res) {
-				if (res.data.result.songCount > 0) {
-					const songs = res.data.result.songs.map(song => {
-						return {
-							id: song.id,
-							name: song.name,
-							album: song.album.name,
-							artist: song.artists[0].name
-						}
-					})
-					const offset = _this.data.offset + songs.length
-					_this.setData({
-						songs,
-						offset
-					})
-				} else {
-					_this.setData({
-						songs: []
-					})
-				}
-				wx.hideLoading()
-			},
-			fail: function(res) {},
-			complete: function(res) {},
-		})
+    wx.request({
+      url: `https://shenkeling.top:3000/search?keywords=${keyword}&limit=${limit}&offset=${_this.data.offset}`,
+      success: function(res) {
+        if (res.data.result.songCount > 0) {
+          const songs = res.data.result.songs.map(song => {
+            return {
+              id: song.id,
+              name: song.name,
+              album: song.album.name,
+              artist: song.artists[0].name
+            }
+          })
+          const offset = _this.data.offset + songs.length
+          _this.setData({
+            songs,
+            offset
+          })
+        } else {
+          _this.setData({
+            songs: []
+          })
+        }
+        wx.hideLoading()
+      },
+      fail: function(err) {
+        wx.showToast({
+          title: '出错啦',
+          icon: 'error',
+          image: '',
+          duration: 2000,
+          mask: true,
+          success: function(res) {},
+          fail: function(res) {},
+          complete: function(res) {},
+        })
+      },
+      complete: function(res) {},
+    })
     const db = getApp().globalData.db
     db.collection('logs').add({
       data: {

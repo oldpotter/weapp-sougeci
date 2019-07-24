@@ -42,6 +42,7 @@ Page({
     return new Promise((resolve, reject) => {
       if (skip != 0) {
         db.collection('lyrics')
+					.where({ _openid: getApp().globalData.openid })
           .limit(limit)
           .skip(skip)
 					.orderBy('date', 'desc')
@@ -52,6 +53,7 @@ Page({
           })
       } else {
         db.collection('lyrics')
+					.where({ _openid: getApp().globalData.openid })
           .limit(limit)
 					.orderBy('date', 'desc')
           .get({

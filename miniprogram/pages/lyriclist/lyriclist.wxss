@@ -1,0 +1,6 @@
+/* miniprogram/pages/lyriclist.wxss */
+.add-btn{
+	position: fixed;
+	right: 10rpx;
+	top:10rpx;
+}

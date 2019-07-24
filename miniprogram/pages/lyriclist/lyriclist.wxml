@@ -1,0 +1,25 @@
+<view class='light-primary' style='z-index: 100;position:fixed; bottom:20rpx; right: 20rpx; display:flex; flex-direction: row-reverse; padding: 10rpx; background:'>
+  <van-icon name="add" size="2.5em" bind:click="onTapAdd" />
+</view>
+
+<van-cell-group>
+  <block wx:for='{{list}}' wx:for-item='ll' wx:key='ll._id'>
+    <van-cell title="{{ll.title}}" value="{{ ll.lyrics.length > 0? ll.lyrics.length: 0 }}首" label="{{ ll.desc ? ll.desc: '暂无歌单描述' }}" bind:click="onTapCell" data-id="{{ll._id}}" />
+  </block>
+</van-cell-group>
+
+<van-popup style='margin:10rpx;' show="{{ showPopup }}" bind:close="onClosePopup">
+  <view style='width: 90vw;'>
+    <!-- 歌单标题
+    <van-field value="{{ title }}" placeholder="请输入歌单标题" border bind:change="onTitleChange" />
+    <van-button type="primary" disabled='{{ title.length == 0}}' bind:click="onTapOK" loading='{{ loading }}'>确定</van-button> -->
+    <van-panel title='添加歌单' use-footer-slot>
+      <van-field border='{{ false }}' value="{{ title }}" placeholder="请输入歌单标题" bind:change="onTitleChange" />
+      <view slot="footer">
+        <van-button type="primary" disabled='{{ title.length == 0}}' bind:click="onTapOK" loading='{{ loading }}'>确定</van-button>
+      </view>
+    </van-panel>
+  </view>
+</van-popup>
+
+<i-load-more tip='{{tip}}' loading='{{loading}}' />

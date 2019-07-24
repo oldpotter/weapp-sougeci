@@ -1,0 +1,4 @@
+/* miniprogram/pages/lyriclist/edit.wxss */
+.footer{
+	text-align: right;
+}

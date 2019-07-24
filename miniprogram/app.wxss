@@ -5,3 +5,29 @@
   align-items: center;
   box-sizing: border-box;
 } 
+
+.app-bottom{
+	background: #ececec;
+	padding: 10rpx 20rpx;
+	position:fixed; left:0;right:0; bottom:0;
+}
+
+.primary{
+	color: #2d8cf0; 
+}
+
+.light-primary{
+	color: #5cadff;
+}
+
+.title{
+	color: #1c2438;
+}
+
+.content{
+	color: #495060;
+}
+
+.sub-color{
+	color:#80848f;
+}

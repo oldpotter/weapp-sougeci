@@ -1,2 +1,2 @@
 <!--miniprogram/pages/test/test.wxml-->
-<text>miniprogram/pages/test/test.wxml</text>
+<van-button size="small" style='margin-right: 20rpx' type='info' bind:click='jump'>跳</van-button>

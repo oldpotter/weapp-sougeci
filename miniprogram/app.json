@@ -3,14 +3,59 @@
 		"pages/collect/collect",
 		"pages/search/search",
 		"pages/lyric/lyric",
-		"pages/test/test"
+		"pages/test/test",
+		"pages/lyriclist/lyriclist",
+		"pages/lyriclist/edit",
+		"pages/lyriclist/collect",
+		"pages/test/tt",
+		"pages/test/new"
 	],
+	"tabBar": {
+		"list": [
+			{
+				"pagePath": "pages/collect/collect",
+				"text": "歌词",
+				"selectedIconPath": "images/lyric-on.png",
+				"iconPath": "images/lyric-off.png"
+			},
+			{
+				"pagePath": "pages/lyriclist/lyriclist",
+				"text": "歌单",
+				"selectedIconPath": "images/list-on.png",
+				"iconPath": "images/list-off.png"
+			}
+		]
+	},
 	"window": {
 		"backgroundColor": "#F6F6F6",
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#F6F6F6",
 		"navigationBarTitleText": "搜歌词",
-		"navigationBarTextStyle": "black"
+		"navigationBarTextStyle": "black",
+		"enablePullDownRefresh": true
 	},
-	"sitemapLocation": "sitemap.json"
+	"sitemapLocation": "sitemap.json",
+	"networkTimeout": {
+		"request": 20000
+	},
+	"usingComponents": {
+		"van-toast": "./components/vant/toast/index",
+		"van-checkbox": "./components/vant/checkbox/index",
+		"van-checkbox-group": "./components/vant/checkbox-group/index",
+		"van-button": "./components/vant/button/index",
+		"van-field": "../../components/vant/field/index",
+		"van-popup": "../../components/vant/popup/index",
+		"van-icon": "../../components/vant/icon/index",
+		"van-panel": "../../components/vant/panel/index",
+		"van-cell": "../../components/vant/cell/index",
+		"van-cell-group": "../../components/vant/cell-group/index",
+		"kl-search": "../../components/klsearch/klsearch",
+		"i-cell-group": "../../components/iview/cell-group/index",
+		"i-cell": "../../components/iview/cell/index",
+		"i-load-more": "../../components/iview/load-more/index",
+		"i-button": "../../components/iview/button/index",
+		"i-message": "../../components/iview/message/index",
+		"i-icon": "../../components/iview/icon/index",
+		"i-panel": "../../components/iview/panel/index"
+	}
 }

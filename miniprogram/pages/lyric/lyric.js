@@ -163,7 +163,7 @@ Page({
 
   getLyric(id) {
     const _this = this
-    wx.showLoading({})
+    wx.showLoading()
 		wx.request({
 			url: 'https://shenkeling.top:3000/lyric?id=' + _this.data.id,
 			success: function(res) {
@@ -183,6 +183,18 @@ Page({
 								delta: 1,
 							})
 						},
+						fail(err){
+							wx.showToast({
+								title: '出错啦',
+								icon: 'error',
+								image: '',
+								duration: 2000,
+								mask: true,
+								success: function (res) { },
+								fail: function (res) { },
+								complete: function (res) { },
+							})
+						}
 					})
 				} else {
 					const lyric = res.data.lrc.lyric
@@ -246,6 +258,7 @@ Page({
       }
     })
 		*/
+
   },
 
   //推送歌词到shenkeling.top

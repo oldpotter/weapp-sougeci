@@ -13,7 +13,7 @@
 	},
 	"appid": "wx37c195cd3224b69d",
 	"projectname": "sougeci",
-	"libVersion": "2.7.3",
+	"libVersion": "2.7.7",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -46,6 +46,35 @@
 					"id": -1,
 					"name": "test",
 					"pathName": "pages/test/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "歌单",
+					"pathName": "pages/lyriclist/lyriclist",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "歌单信息编辑",
+					"pathName": "pages/lyriclist/edit",
+					"query": "id=25c59b425d37c4a0013a3d6a5dbae9bf",
+					"scene": 1007
+				},
+				{
+					"id": -1,
+					"name": "添加歌词页面",
+					"pathName": "pages/lyriclist/collect",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索",
+					"pathName": "pages/search/search",
+					"query": "",
 					"scene": null
 				}
 			]

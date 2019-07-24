@@ -1,0 +1,15 @@
+<view style="marigin-bottom: 50rpx">
+  <van-checkbox-group value="{{ result }}" bind:change="onChange">
+    <van-cell-group>
+      <block wx:for='{{list}}' wx:for-item='song' wx:key='song._id'>
+        <van-cell title="{{ song.name }} - {{ song.album }}" value-class="value-class" clickable data-id="{{ song._id }}" bind:click="toggle">
+          <van-checkbox catch:tap="noop" class="checkboxes-{{ song._id }}" name="{{ song._id }}" />
+        </van-cell>
+      </block>
+    </van-cell-group>
+  </van-checkbox-group>
+</view>
+
+<view class='app-bottom'>
+  <van-button type="primary" size='large' bind:click="onClickOK">确定</van-button>
+</view>

@@ -1,0 +1,2 @@
+<!--miniprogram/pages/test/tt.wxml-->
+<van-button size="small" style='margin-right: 20rpx' type='info' open-type='share'>分享</van-button>

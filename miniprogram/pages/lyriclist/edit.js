@@ -2,16 +2,19 @@ import Toast from '../../components/vant/toast/toast'
 import Notify from '../../components/vant/notify/notify'
 const db = getApp().globalData.db
 const _ = db.command
+const dayjs = require('dayjs')
 Page({
   data: {
     _id: null, //歌单id
     title: undefined, //歌单标题
     desc: undefined, //歌单描述
-    loading: false,
+    loading: false, //修改标题信息
     list: [],
     owner: null, //歌单创建者的openid,
     openid: null, //用户的openid,
-    showPopup: false //是否显示弹出层
+    showPopup: false, //是否显示弹出层
+    imageUrl: null, //封面
+    uploading: false //上传封面
   },
 
   onLoad(e) {
@@ -21,10 +24,16 @@ Page({
     })
   },
 
+  onReady() {
+    Notify('左划单元格删除已添加的歌词')
+  },
+
   onShareAppMessage() {
     const _this = this
     return {
-      path: `/pages/lyriclist/edit?id=${_this.data._id}`
+			title: '歌单标题：' + _this.data.title,
+      path: `/pages/lyriclist/edit?id=${_this.data._id}`,
+      imageUrl: _this.data.imageUrl
     }
   },
 
@@ -40,16 +49,26 @@ Page({
             desc: res.data.desc,
             owner: res.data._openid
           })
+					if (res.data.pic) {
+						//换取真是地址
+						wx.cloud.getTempFileURL({
+							fileList: [res.data.pic],
+							success(res) {
+								if (res.errMsg == 'cloud.getTempFileURL:ok') {
+									_this.setData({
+										imageUrl: res.fileList[0].tempFileURL
+									})
+									// console.log('address:', _this.data.imageUrl)
+								}
+
+							}
+						})
+          }
           if (res.data.lyrics) {
             db.collection('lyrics').where({
               _id: _.in(res.data.lyrics)
             }).get({
               success(res) {
-								// console.log(res)
-                if (res.data.length > 0) {
-                  Notify('左划单元格删除已添加的歌词')
-                }
-                
                 _this.setData({
                   list: res.data,
                   offset: res.length,
@@ -169,6 +188,7 @@ Page({
     })
   },
 
+  //删除歌词
   onCellClose(event) {
     const _this = this
     const {
@@ -194,5 +214,68 @@ Page({
         }
       }
     })
-  }
+  },
+
+  //选择了图片
+  onBefore(e) {
+    // console.log('onBefore:', e)
+    this.setData({
+      imageUrl: null,
+      uploading: true
+    })
+    const _this = this
+    const path = e.detail.tempFilePaths[0]
+    // console.log(path)
+    wx.cloud.uploadFile({
+      cloudPath: _this.data.title,
+      filePath: path,
+      success(res) {
+        if (res.statusCode == 200) {
+          // console.log('fileId：', res.fileID)
+          //修改歌单封面
+          db.collection('lyriclist').doc(_this.data._id).update({
+            data: {
+              pic: res.fileID
+            },
+            success(res) {
+              if (res.stats.updated == 1) {
+
+              }
+            }
+          })
+          //换取真是地址
+          wx.cloud.getTempFileURL({
+            fileList: [res.fileID],
+            success(res) {
+              if (res.errMsg == 'cloud.getTempFileURL:ok') {
+                _this.setData({
+                  uploading: false,
+                  imageUrl: res.fileList[0].tempFileURL
+                })
+								// console.log('address:', _this.data.imageUrl)
+              }
+
+            }
+          })
+        }
+      },
+      fail: console.error
+    })
+  },
+
+
+  onRemove(e) {
+    // const { file, fileList } = e.detail
+    // wx.showModal({
+    // 	content: '确定删除？',
+    // 	success: (res) => {
+    // 		if (res.confirm) {
+    // 			this.setData({
+    // 				fileList: fileList.filter((n) => n.uid !== file.uid),
+    // 			})
+    // 		}
+    // 	},
+    // })
+  },
+
 })

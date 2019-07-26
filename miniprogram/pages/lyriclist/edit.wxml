@@ -8,27 +8,37 @@
   </view>
 </van-cell>
 
-<view style='display:flex; flex-direction: row;  flex-wrap: wrap; margin: 10rpx 20rpx;'>
-  <view hidden='{{ openid == owner }}'>
-    <van-button size="small" style='margin-right: 20rpx;' type='info' bind:click="onTapCollect">收藏歌单</van-button>
-  </view>
-  <view hidden='{{ openid != owner }}'>
-    <van-button size="small" style='margin-right: 20rpx;' type='danger' disabled bind:click="onTapDelete">删除歌单</van-button>
-  </view>
-  <van-button size="small" style='margin-right: 20rpx' type='info' open-type='share'>分享歌单</van-button>
-  <!-- <van-button size="small" style='margin-right: 20rpx' disabled>编辑歌单信息</van-button> -->
-  <van-button size="small" type="primary" bind:click="onTapAddLyric">添加歌词</van-button>
+<view hidden='{{ openid != owner }}'>
+  <wux-white-space size="large" />
+  <wux-wing-blank size="large">
+    <text class="desc-text">添加歌单封面（支持PNG及JPG，显示图片长宽比是 5:4）</text>
+    <wux-white-space />
+    <wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="onBefore" bind:preview="onPreview" bind:remove="onRemove" controlled>
+      <image src="{{ imageUrl }}" wx:if="{{ imageUrl }}" />
+      <text wx:else>+</text>
+      <van-loading wx:if="{{ uploading }}" type="spinner" />
+    </wux-upload>
+  </wux-wing-blank>
 </view>
 
 
-<!-- <i-cell-group>
-  <block wx:for='{{list}}' wx:for-item='song' wx:key='song._id'>
-    <i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.songId}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}&db_id={{song._id}}'>
-      <view class='light-primary' slot='footer'>{{song.artist}}</view>
-    </i-cell>
-  </block>
-</i-cell-group> -->
+<wux-white-space size="large" />
+<wux-wing-blank size="large">
+  <view style='display:flex; flex-direction: row;  flex-wrap: wrap; '>
+    <view hidden='{{ openid == owner }}'>
+      <van-button size="small" style='margin-right: 20rpx;' type='info' bind:click="onTapCollect">收藏歌单</van-button>
+    </view>
+    <view hidden='{{ openid != owner }}'>
+      <van-button size="small" style='margin-right: 20rpx;' type='danger' disabled bind:click="onTapDelete">删除歌单</van-button>
+    </view>
+    <van-button size="small" style='margin-right: 20rpx' type='info' open-type='share'>分享歌单</van-button>
+    <!-- <van-button size="small" style='margin-right: 20rpx' disabled>编辑歌单信息</van-button> -->
+    <van-button size="small" type="primary" bind:click="onTapAddLyric">添加歌词</van-button>
+  </view>
+</wux-wing-blank>
 
+
+<wux-white-space size="large" />
 
 <van-cell-group>
   <block wx:for='{{list}}' wx:for-item='song' wx:for-index='index' wx:key='song._id'>
@@ -45,8 +55,9 @@
 <van-popup style='margin:10rpx;' show="{{ showPopup }}" bind:close="onClosePopup">
   <view style='width: 90vw;'>
     <van-panel title='编辑歌单' use-footer-slot>
-      <van-field border='{{ false }}' value="{{ title }}" placeholder="请输入歌单标题" bind:change="onTitleChange" />
-      <van-field border='{{ false }}' value="{{ desc }}" placeholder="请输入歌单描述" bind:change="onDescChange" />
+      <van-field value="{{ title }}" placeholder="请输入歌单标题" bind:change="onTitleChange" />
+      <van-field value="{{ desc }}" placeholder="请输入歌单描述" bind:change="onDescChange" />
+
       <view slot="footer">
         <van-button type="primary" disabled='{{ title.length == 0}}' bind:click="onTapOK" loading='{{ loading }}'>确定</van-button>
       </view>

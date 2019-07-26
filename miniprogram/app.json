@@ -39,8 +39,12 @@
 		"request": 20000
 	},
 	"usingComponents": {
+		"wux-wing-blank": "./miniprogram_npm/wux-weapp/wing-blank/index",
+		"wux-white-space": "./miniprogram_npm/wux-weapp/white-space/index",
+		"wux-upload": "./miniprogram_npm/wux-weapp/upload/index",
 		"van-swipe-cell": "./components/vant/swipe-cell/index",
 		"van-notify": "./components/vant/notify/index",
+		"van-loading": "./components/vant/loading/index",
 		"van-toast": "./components/vant/toast/index",
 		"van-checkbox": "./components/vant/checkbox/index",
 		"van-checkbox-group": "./components/vant/checkbox-group/index",

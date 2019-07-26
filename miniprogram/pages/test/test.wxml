@@ -1,2 +1,18 @@
-<!--miniprogram/pages/test/test.wxml-->
-<van-button size="small" style='margin-right: 20rpx' type='info' bind:click='jump'>跳</van-button>
+<wux-white-space />
+<wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="b1" bind:preview="onPreview" bind:remove="onRemove" controlled>
+  <image src="{{ imageUrl1 }}" wx:if="{{ imageUrl1 }}" />
+  <text wx:else>+</text>
+</wux-upload>
+
+<wux-white-space />
+<wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="b2" bind:preview="onPreview" bind:remove="onRemove" controlled>
+  <image src="{{ imageUrl2 }}" wx:if="{{ imageUrl2 }}" />
+  <text wx:else>+</text>
+</wux-upload>
+
+
+<wux-white-space />
+<wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="b3" bind:preview="onPreview" bind:remove="onRemove" controlled>
+  <image src="{{ imageUrl3 }}" wx:if="{{ imageUrl3 }}" />
+  <text wx:else>+</text>
+</wux-upload>

@@ -31,3 +31,8 @@
 .sub-color{
 	color:#80848f;
 }
+
+.desc-text{
+	font-size: 24rpx;
+	color: darkgray;
+}

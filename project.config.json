@@ -60,8 +60,8 @@
 					"id": 3,
 					"name": "歌单信息编辑",
 					"pathName": "pages/lyriclist/edit",
-					"query": "id=25c59b425d37c4a0013a3d6a5dbae9bf",
-					"scene": 1007
+					"query": "id=25c59b425d37b7b7013133ee7a08f326",
+					"scene": 1001
 				},
 				{
 					"id": -1,
@@ -76,6 +76,13 @@
 					"pathName": "pages/search/search",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "歌单信息编辑-分享",
+					"pathName": "pages/lyriclist/edit",
+					"query": "id=25c59b425d37b7b7013133ee7a08f326",
+					"scene": 1007
 				}
 			]
 		}

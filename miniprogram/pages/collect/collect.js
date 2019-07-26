@@ -8,6 +8,7 @@ Page({
   },
 
   onShow() {
+		// console.log(`debug: ${getApp().globalData.debug}`)
     const _this = this
     this.getList().then(res => {
       _this.setData({

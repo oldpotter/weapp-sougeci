@@ -1,7 +1,7 @@
 <!--miniprogram/pages/lyric/lyric.wxml-->
 <i-panel>
   <view style='padding: 20rpx 40rpx; margin-bottom: 150rpx;'>
-    <block wx:for='{{ lyricArray }}' wx:for-key='*this'>
+    <block wx:for='{{ lyricArray }}' wx:key='*this'>
       <label bindtap='tap' data-index='{{ index }}'>
         <view style='display:{{ ableToSelected ? "inline":"none" }}'>
           <i-icon type="success_fill" size="{{fontSize*1.3}}" color="{{ item.checked?'#5cadff':'#80848f' }}" />
@@ -17,9 +17,9 @@
     <view hidden='{{ ableToSelected }}'>
       <i-button inline size='small' type='primary' bind:click='copy' disabled='{{!lyric}}'>复制</i-button>
     </view>
-    <view hidden='{{ ableToSelected }}'>
+    <!-- <view hidden='{{ ableToSelected }}'>
       <i-button inline size='small' type='info' bind:click='push' disabled='{{!lyric}}' loading='{{pushingLyric}}'>{{pushingLyric?"请稍后":"浏览器中查看"}}</i-button>
-    </view>
+    </view> -->
     <view hidden='{{ ableToSelected }}'>
       <i-button inline size='small' type='success' bind:click='collect' disabled='{{!lyric}}' loading='{{loading}}'>{{db_id?"取消收藏":"收藏"}}</i-button>
     </view>

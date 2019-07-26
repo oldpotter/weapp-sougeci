@@ -11,5 +11,5 @@
 </view>
 
 <view class='app-bottom'>
-  <van-button type="primary" size='large' bind:click="onClickOK">确定</van-button>
+  <van-button type="primary" size='large' bind:click="onClickOK" disabled='{{ result.length == 0 }}' loading='{{ adding }}'>确定</van-button>
 </view>

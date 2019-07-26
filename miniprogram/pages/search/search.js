@@ -150,6 +150,7 @@ Page({
       success: function(res) {
         if (res.data.result.songCount > 0) {
           const songs = res.data.result.songs.map(song => {
+						// console.log(`song: `, song)
             return {
               id: song.id,
               name: song.name,

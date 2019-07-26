@@ -6,7 +6,7 @@
 </block>
 <i-cell-group>
   <block wx:for='{{songs}}' wx:for-item='song' wx:key='song.id'>
-    <i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.id}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}'>
+    <i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.id}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}&db_id={{song._id}}'>
       <view class='light-primary' slot='footer'>{{ song.artist }}</view>
     </i-cell>
   </block>

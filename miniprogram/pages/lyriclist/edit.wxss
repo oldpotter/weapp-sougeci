@@ -2,3 +2,23 @@
 .footer{
 	text-align: right;
 }
+
+.custom-icon{
+	width: 2.5em;
+	height:2.5em;
+	/* background: black; */
+}
+
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+  display: flex;
+	justify-content: center;
+	align-items: center;
+  width: 65px;
+  height: 44px;
+  font-size: 15px;
+  line-height: 44px;
+  color: #fff;
+  text-align: center;
+  background-color: #f44;
+}

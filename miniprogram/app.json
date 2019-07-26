@@ -39,6 +39,8 @@
 		"request": 20000
 	},
 	"usingComponents": {
+		"van-swipe-cell": "./components/vant/swipe-cell/index",
+		"van-notify": "./components/vant/notify/index",
 		"van-toast": "./components/vant/toast/index",
 		"van-checkbox": "./components/vant/checkbox/index",
 		"van-checkbox-group": "./components/vant/checkbox-group/index",

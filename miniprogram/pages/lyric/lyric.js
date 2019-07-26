@@ -15,19 +15,19 @@ Page({
     lyricArray: [],
     ableToSelected: false,
     loading: false, //收藏按钮状态
-    db_id: null,
+    db_id: undefined,
     fontSize: 10,
     pushingLyric: false //推送歌词到shenkeling.top
   },
 
   onLoad(e) {
-    // console.log(e)
+    
     this.setData({
       id: e.songId || e.id,
       name: e.name,
       album: e.album,
       artist: e.artist,
-      db_id: e.db_id ? e.db_id : null,
+      db_id: e.db_id ? e.db_id : '',
       fontSize: getApp().globalData.fontSize
     })
     this.getLyric(this.data.id)
@@ -78,7 +78,7 @@ Page({
       success: function(res) {
         const lyricArray = _this.data.lyricArray
 				lyricArray.forEach(item => item.checked = false)
-				console.log(lyricArray)
+				// console.log(lyricArray)
         _this.setData({
           lyricArray,
           ableToSelected: false
@@ -89,6 +89,7 @@ Page({
     })
   },
 
+	//收藏歌词
   collect() {
     const _this = this
     this.setData({
@@ -118,6 +119,7 @@ Page({
         })
       },
       fail(err) {
+				// console.log('没有这个歌词')
         //没有收藏这个歌词
         db.collection('lyrics').add({
           data: {

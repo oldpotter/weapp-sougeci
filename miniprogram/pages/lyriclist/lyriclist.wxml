@@ -10,9 +10,6 @@
 
 <van-popup style='margin:10rpx;' show="{{ showPopup }}" bind:close="onClosePopup">
   <view style='width: 90vw;'>
-    <!-- 歌单标题
-    <van-field value="{{ title }}" placeholder="请输入歌单标题" border bind:change="onTitleChange" />
-    <van-button type="primary" disabled='{{ title.length == 0}}' bind:click="onTapOK" loading='{{ loading }}'>确定</van-button> -->
     <van-panel title='添加歌单' use-footer-slot>
       <van-field border='{{ false }}' value="{{ title }}" placeholder="请输入歌单标题" bind:change="onTitleChange" />
       <view slot="footer">

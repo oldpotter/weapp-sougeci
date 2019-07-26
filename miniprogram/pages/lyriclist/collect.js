@@ -1,9 +1,12 @@
 const limit = 15 //一次加载的数量
+const db = getApp().globalData.db
+const _ = db.command
 Page({
 	data: {
 		_id: null,//歌单id
 		list: [],
-		result: []
+		result: [],
+		adding: false
 	},
 
 	onLoad(e){
@@ -38,10 +41,11 @@ Page({
 	getList(skip = 0) {
 		//获取歌词列表
 		const _this = this
-		const db = getApp().globalData.db
+		// const db = getApp().globalData.db
 		return new Promise((resolve, reject) => {
 			if (skip != 0) {
 				db.collection('lyrics')
+					.where({ _openid: getApp().globalData.openid })
 					.limit(limit)
 					.skip(skip)
 					.orderBy('date', 'desc')
@@ -52,6 +56,7 @@ Page({
 					})
 			} else {
 				db.collection('lyrics')
+					.where({ _openid: getApp().globalData.openid })
 					.limit(limit)
 					.orderBy('date', 'desc')
 					.get({
@@ -63,7 +68,9 @@ Page({
 		})
 	},
 
+	//选择变动
 	onChange(event) {
+		// console.log(event)
 		this.setData({
 			result: event.detail
 		});
@@ -78,22 +85,23 @@ Page({
 	noop() { },
 
 	onClickOK(){
-		//添加歌词到歌单
+		this.setData({adding: true})
+		// console.log(this.data.result)
+		//添加歌词到歌单(调用callFunction)
 		const _this = this
-		const db = getApp().globalData.db
-		const _ = db.command
-		db.collection('lyriclist').doc(this.data._id).update({
-			// data 传入需要局部更新的数据
-			data: {
-				// 表示将 done 字段置为 true
-				lyrics: _.push(_this.data.result)
+		wx.cloud.callFunction({
+			name: 'addLyricToList',
+			data:{
+				ownerId: _this.data._id,
+				lyrics: _this.data.result 
 			},
-			success(){
-				wx.navigateBack({
-					delta: 1,
-				})
-			},
-			fail: console.error
+			success(res){
+				if(res.result.stats.updated == 1){
+					wx.navigateBack({
+						delta: 1,
+					})
+				}
+			}
 		})
 	}
 })

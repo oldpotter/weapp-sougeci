@@ -1,17 +1,16 @@
-//收藏歌单
+// 添加歌词到歌单
 const cloud = require('wx-server-sdk')
-
 cloud.init()
 const db = cloud.database()
-
+const _ = db.command
 exports.main = async (event, context) => {
-	try{
+	try {
 		return await db.collection('lyriclist').doc(event.ownerId).update({
-			data:{
-				collected: event.collectedId
+			data: {
+				lyrics: _.push(event.lyrics)
 			}
 		})
-	}catch(err){
+	} catch (err) {
 		console.error(err)
 	}
 }

@@ -1,18 +1,2 @@
-<wux-white-space />
-<wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="b1" bind:preview="onPreview" bind:remove="onRemove" controlled>
-  <image src="{{ imageUrl1 }}" wx:if="{{ imageUrl1 }}" />
-  <text wx:else>+</text>
-</wux-upload>
-
-<wux-white-space />
-<wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="b2" bind:preview="onPreview" bind:remove="onRemove" controlled>
-  <image src="{{ imageUrl2 }}" wx:if="{{ imageUrl2 }}" />
-  <text wx:else>+</text>
-</wux-upload>
-
-
-<wux-white-space />
-<wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="b3" bind:preview="onPreview" bind:remove="onRemove" controlled>
-  <image src="{{ imageUrl3 }}" wx:if="{{ imageUrl3 }}" />
-  <text wx:else>+</text>
-</wux-upload>
+    <van-button size="small" type="primary" bind:click="c">添加歌词</van-button>
+		<image src='{{ imageUrl }}'></image>

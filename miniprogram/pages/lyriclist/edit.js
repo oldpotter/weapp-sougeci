@@ -3,6 +3,7 @@ import Notify from '../../components/vant/notify/notify'
 const db = getApp().globalData.db
 const _ = db.command
 const dayjs = require('dayjs')
+const limit = 15 //一次加载的数量
 Page({
   data: {
     _id: null, //歌单id
@@ -31,7 +32,7 @@ Page({
   onShareAppMessage() {
     const _this = this
     return {
-			title: '歌单标题：' + _this.data.title,
+      title: '歌单标题：' + _this.data.title,
       path: `/pages/lyriclist/edit?id=${_this.data._id}`,
       imageUrl: _this.data.imageUrl
     }
@@ -49,38 +50,43 @@ Page({
             desc: res.data.desc,
             owner: res.data._openid
           })
-					if (res.data.pic) {
-						//换取真是地址
-						wx.cloud.getTempFileURL({
-							fileList: [res.data.pic],
-							success(res) {
-								if (res.errMsg == 'cloud.getTempFileURL:ok') {
-									_this.setData({
-										imageUrl: res.fileList[0].tempFileURL
-									})
-									// console.log('address:', _this.data.imageUrl)
-								}
-
-							}
-						})
-          }
-          if (res.data.lyrics) {
-            db.collection('lyrics').where({
-              _id: _.in(res.data.lyrics)
-            }).get({
+          if (res.data.pic) {
+            //换取真是地址
+            wx.cloud.getTempFileURL({
+              fileList: [res.data.pic],
               success(res) {
-                _this.setData({
-                  list: res.data,
-                  offset: res.length,
-                  tip: res.length > 0 ? '' : '暂时没有数据'
-                })
+                if (res.errMsg == 'cloud.getTempFileURL:ok') {
+                  _this.setData({
+                    imageUrl: res.fileList[0].tempFileURL
+                  })
+                  // console.log('address:', _this.data.imageUrl)
+                }
+
               }
             })
           }
-
+          if (res.data.lyrics) {
+            _this.setData({
+              lyrics: res.data.lyrics
+            })
+            db.collection('lyrics').where({
+                _id: _.in(res.data.lyrics)
+              })
+              .limit(limit)
+              .get({
+                success(res) {
+                  // console.log(res)
+                  _this.setData({
+                    list: res.data,
+                    offset: res.data.length,
+                    tip: res.data.length > 0 ? '' : '暂时没有数据'
+                  })
+                  // console.log('offset:', _this.data.offset)
+                }
+              })
+          }
         }
       })
-
     }
   },
 
@@ -89,6 +95,30 @@ Page({
       openid: getApp().globalData.openid
     })
 
+  },
+
+  onReachBottom() {
+    const _this = this
+    this.setData({
+      getting: true
+    })
+    db.collection('lyrics').where({
+        _id: _.in(_this.data.lyrics)
+      })
+      .limit(limit)
+      .skip(_this.data.offset)
+      .get({
+        success(res) {
+          let list = _this.data.list
+          list = list.concat(res.data)
+          _this.setData({
+            list,
+            getting: false,
+            tip: res.data.length < limit ? '没有更多数据了' : '',
+            offset: list.length
+          })
+        }
+      })
   },
 
   onPullDownRefresh() {
@@ -216,6 +246,7 @@ Page({
     })
   },
 
+
   //选择了图片
   onBefore(e) {
     // console.log('onBefore:', e)
@@ -227,11 +258,11 @@ Page({
     const path = e.detail.tempFilePaths[0]
     // console.log(path)
     wx.cloud.uploadFile({
-      cloudPath: _this.data.title,
+      cloudPath: _this.data.title + '.jpg',
       filePath: path,
       success(res) {
         if (res.statusCode == 200) {
-          // console.log('fileId：', res.fileID)
+          // console.log('upload:', res)
           //修改歌单封面
           db.collection('lyriclist').doc(_this.data._id).update({
             data: {
@@ -239,23 +270,26 @@ Page({
             },
             success(res) {
               if (res.stats.updated == 1) {
-
+                console.log('更换封面成功')
               }
             }
           })
           //换取真是地址
           wx.cloud.getTempFileURL({
-            fileList: [res.fileID],
+            fileList: [{
+              fileID: res.fileID,
+              maxAge: 1 * 60
+            }],
             success(res) {
+              // console.log('res:', res)
               if (res.errMsg == 'cloud.getTempFileURL:ok') {
                 _this.setData({
                   uploading: false,
                   imageUrl: res.fileList[0].tempFileURL
                 })
-								// console.log('address:', _this.data.imageUrl)
               }
-
-            }
+            },
+            fail: console.error,
           })
         }
       },

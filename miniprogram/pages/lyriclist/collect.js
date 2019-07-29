@@ -87,21 +87,24 @@ Page({
 	onClickOK(){
 		this.setData({adding: true})
 		// console.log(this.data.result)
+		// console.log(this.data._id)
 		//添加歌词到歌单(调用callFunction)
 		const _this = this
 		wx.cloud.callFunction({
 			name: 'addLyricToList',
 			data:{
-				ownerId: _this.data._id,
+				id: _this.data._id,
 				lyrics: _this.data.result 
 			},
 			success(res){
+				console.log(res)
 				if(res.result.stats.updated == 1){
 					wx.navigateBack({
 						delta: 1,
 					})
 				}
-			}
+			},
+			fail: console.error
 		})
 	}
 })

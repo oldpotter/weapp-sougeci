@@ -54,7 +54,7 @@ Page({
       }
     })*/
     wx.request({
-      url: `https://shenkeling.top:3000/search?keywords=${_this.data.keyword}&limit=${limit}&offset=${_this.data.offset}`,
+			url: `https://shenkeling.top:3000/search?keywords=${_this.data.keyword}&limit=${limit}&offset=${_this.data.offset}`,
       success: function(res) {
         if (res.data.result.songCount > 0) {
           let songs = res.data.result.songs.map(song => {

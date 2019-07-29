@@ -120,9 +120,9 @@ Page({
       data: {
         title: _this.data.title,
         createTime: db.serverDate(),
-				collected: null
+				collected: null,
+				lyrics: []
       },
-
       success(res) {
         if (res.errMsg == 'collection.add:ok') {
           _this.setData({

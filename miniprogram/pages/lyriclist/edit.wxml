@@ -13,10 +13,10 @@
   <wux-wing-blank size="large">
     <text class="desc-text">添加歌单封面（支持PNG及JPG，显示图片长宽比是 5:4）</text>
     <wux-white-space />
-    <wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="onBefore" bind:preview="onPreview" bind:remove="onRemove" controlled>
+    <wux-upload listType="picture-card" sizeType="{{['compressed']}}" showRemoveIcon="{{ true }}" bind:before="onBefore" bind:preview="onPreview" bind:remove="onRemove">
       <image src="{{ imageUrl }}" wx:if="{{ imageUrl }}" />
+      <van-loading wx:elif="{{ uploading }}" type="spinner" />
       <text wx:else>+</text>
-      <van-loading wx:if="{{ uploading }}" type="spinner" />
     </wux-upload>
   </wux-wing-blank>
 </view>
@@ -48,7 +48,7 @@
     </van-swipe-cell>
   </block>
 </van-cell-group>
-
+<i-load-more tip='{{tip}}' loading='{{getting}}'/>
 
 
 
@@ -64,3 +64,4 @@
     </van-panel>
   </view>
 </van-popup>
+

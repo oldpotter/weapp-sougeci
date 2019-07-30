@@ -21,7 +21,6 @@ Page({
   },
 
   onLoad(e) {
-    
     this.setData({
       id: e.songId || e.id,
       name: e.name,
@@ -166,6 +165,7 @@ Page({
   getLyric(id) {
     const _this = this
     wx.showLoading()
+		/*
 		wx.request({
 			url: 'https://shenkeling.top:3000/lyric?id=' + _this.data.id,
 			success: function(res) {
@@ -216,16 +216,18 @@ Page({
 			},
 			fail: function(res) {},
 			complete: function(res) {},
-		})
-		/*
+		})*/
     wx.cloud.callFunction({
-      name: 'lyric',
+      name: 'musicServe',
       data: {
+				flag: 'lyric',
         id: _this.data.id
       },
       success(res) {
-        res = JSON.parse(res.result)
+        // res = JSON.parse(res.result)
+				res = res.result.body
         // console.log(res)
+				
         if (!res.lrc || res.lrc.lyric.length < 0) {
           //没有歌词
           wx.showModal({
@@ -259,7 +261,7 @@ Page({
         wx.hideLoading()
       }
     })
-		*/
+		
 
   },
 

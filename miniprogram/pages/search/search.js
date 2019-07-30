@@ -14,16 +14,17 @@ Page({
     this.setData({
       loading: true
     })
-    /*
     wx.cloud.callFunction({
-      name: 'search',
+      name: 'musicServe',
       data: {
+				flag : 'search',
         keywords: _this.data.keyword,
         limit,
         offset: _this.data.offset
       },
       success(res) {
-        res = JSON.parse(res.result)
+				res = res.result.body
+        // res = JSON.parse(res.result)
         if (res.result.songCount > 0) {
           let songs = res.result.songs.map(song => {
             return {
@@ -52,7 +53,8 @@ Page({
       fail(err) {
         console.error(err)
       }
-    })*/
+    })
+		/*
     wx.request({
 			url: `https://shenkeling.top:3000/search?keywords=${_this.data.keyword}&limit=${limit}&offset=${_this.data.offset}`,
       success: function(res) {
@@ -93,7 +95,7 @@ Page({
         })
       },
       complete: function(res) {},
-    })
+    })*/
   },
 
   doSearch(e) {
@@ -107,17 +109,17 @@ Page({
       offset: 0,
       keyword
     })
-    /*
     wx.cloud.callFunction({
-      name: 'search',
+      name: 'musicServe',
       data: {
+				flag: 'search',
         keywords: keyword,
         limit,
         offset: _this.data.offset
       },
       success(res) {
-        res = JSON.parse(res.result)
-				console.log(`结果: ${res}`)
+				// console.log(res)
+				res = res.result.body
         if (res.result.songCount > 0) {
           const songs = res.result.songs.map(song => {
             return {
@@ -144,7 +146,8 @@ Page({
         console.error(err)
       }
     })
-		*/
+	
+		/*
     wx.request({
       url: `https://shenkeling.top:3000/search?keywords=${keyword}&limit=${limit}&offset=${_this.data.offset}`,
       success: function(res) {
@@ -184,6 +187,7 @@ Page({
       },
       complete: function(res) {},
     })
+		*/
     const db = getApp().globalData.db
     db.collection('logs').add({
       data: {

@@ -1,7 +1,8 @@
 //收藏歌单
 const cloud = require('wx-server-sdk')
-
-cloud.init()
+cloud.init({
+	env: 'prod-904dcd'
+})
 const db = cloud.database()
 
 exports.main = async (event, context) => {

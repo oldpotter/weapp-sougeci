@@ -48,18 +48,24 @@ Page({
           _this.setData({
             title: res.data.title,
             desc: res.data.desc,
-            owner: res.data._openid
+            owner: res.data._openid,
+						imageUrl: null
           })
           if (res.data.pic) {
+
             //换取真是地址
             wx.cloud.getTempFileURL({
-              fileList: [res.data.pic],
+							fileList: [{
+								fileID: res.data.pic,
+								// maxAge: 1
+							}],
               success(res) {
+								// console.log(res)
                 if (res.errMsg == 'cloud.getTempFileURL:ok') {
                   _this.setData({
-                    imageUrl: res.fileList[0].tempFileURL
+										imageUrl: res.fileList[0].tempFileURL + '?&t=' + dayjs().unix()
                   })
-                  // console.log('address:', _this.data.imageUrl)
+                  console.log('address:', _this.data.imageUrl)
                 }
 
               }
@@ -270,27 +276,30 @@ Page({
             },
             success(res) {
               if (res.stats.updated == 1) {
-                console.log('更换封面成功')
+                // console.log('更换封面成功')
               }
+							
             }
           })
-          //换取真是地址
-          wx.cloud.getTempFileURL({
-            fileList: [{
-              fileID: res.fileID,
-              maxAge: 1 * 60
-            }],
-            success(res) {
-              // console.log('res:', res)
-              if (res.errMsg == 'cloud.getTempFileURL:ok') {
-                _this.setData({
-                  uploading: false,
-                  imageUrl: res.fileList[0].tempFileURL
-                })
-              }
-            },
-            fail: console.error,
-          })
+
+					/*
+					//换取真是地址
+					wx.cloud.getTempFileURL({
+						fileList: [{
+							fileID: res.fileID,
+							maxAge: 1 * 1
+						}],
+						success(res) {
+							console.log('res:', res)
+							if (res.errMsg == 'cloud.getTempFileURL:ok') {
+								_this.setData({
+									uploading: false,
+									imageUrl: res.fileList[0].tempFileURL
+								})
+							}
+						},
+						fail: console.error,
+					})*/
         }
       },
       fail: console.error

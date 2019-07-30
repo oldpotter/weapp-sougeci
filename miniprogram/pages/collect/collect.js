@@ -8,16 +8,24 @@ Page({
   },
 
   onShow() {
-		// console.log(`debug: ${getApp().globalData.debug}`)
-    const _this = this
-    this.getList().then(res => {
-      _this.setData({
-        list: res,
-        offset: res.length,
-				tip: res.length > 0 ? '':'暂时没有数据'
-      })
-    })
+		wx.startPullDownRefresh({
+			success: function(res) {},
+			fail: function(res) {},
+			complete: function(res) {},
+		})
   },
+
+	onPullDownRefresh(){
+		const _this = this
+		this.getList().then(res => {
+			_this.setData({
+				list: res,
+				offset: res.length,
+				tip: res.length > 0 ? '' : '暂时没有数据'
+			})
+			wx.stopPullDownRefresh()
+		})
+	},
 
   onReachBottom() {
     const _this = this

@@ -54,7 +54,7 @@ Page({
         db.collection('lyriclist')
 					.where(_.or([
 						{ _openid: getApp().globalData.openid},
-						{ collected: getApp().globalData.openid}
+						{ collected: _.in([getApp().globalData.openid]) }
 					]))
           .limit(limit)
           .skip(skip)
@@ -68,7 +68,7 @@ Page({
         db.collection('lyriclist')
 					.where(_.or([
 						{ _openid: getApp().globalData.openid },
-						{ collected: getApp().globalData.openid }
+						{ collected: _.in([getApp().globalData.openid]) }
 					]))
           .limit(limit)
           .orderBy('createTime', 'desc')
@@ -120,7 +120,7 @@ Page({
       data: {
         title: _this.data.title,
         createTime: db.serverDate(),
-				collected: null,
+				collected: [],
 				lyrics: []
       },
       success(res) {

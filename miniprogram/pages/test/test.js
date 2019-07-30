@@ -1,13 +1,17 @@
 Page({
 	onReady(){
-		console.log('onReady')
-		wx.cloud.callFunction({
-			name: 'test',
-			data:{
-				keywords: '朴树'
-			},
-			success: console.log,
-			fail: console.error
-		})
+		const db = getApp().globalData.db
+		const _ = db.command
+		db.collection('lyriclist')
+			.where({
+				collected: _.in(['o2Xr00B5XdvII4iyWHdfxxT65Hac'])
+			})
+			.orderBy('createTime', 'desc')
+			.get({
+				success(res) {
+					console.log(res)
+				},
+			})
+
 	}
 })

@@ -16,7 +16,8 @@ App({
     this.globalData = {
 			db: wx.cloud.database(),
 			fontSize: 10,
-			openid: null
+			openid: null,
+			refresh: false
 		}
 		
 		//获取当前用户的Openid

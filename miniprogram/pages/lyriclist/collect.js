@@ -97,8 +97,9 @@ Page({
 				lyrics: _this.data.result 
 			},
 			success(res){
-				console.log(res)
+				// console.log(res)
 				if(res.result.stats.updated == 1){
+					getApp().globalData.refresh = true
 					wx.navigateBack({
 						delta: 1,
 					})

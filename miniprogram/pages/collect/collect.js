@@ -9,11 +9,20 @@ Page({
 
   onShow() {
 		wx.startPullDownRefresh({
-			success: function(res) {},
+			success: function(res) {
+			},
 			fail: function(res) {},
 			complete: function(res) {},
 		})
   },
+
+	onReady(){
+		// wx.startPullDownRefresh({
+		// 	success: function (res) { },
+		// 	fail: function (res) { },
+		// 	complete: function (res) { },
+		// })
+	},
 
 	onPullDownRefresh(){
 		const _this = this

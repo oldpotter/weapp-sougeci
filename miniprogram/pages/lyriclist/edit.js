@@ -25,10 +25,6 @@ Page({
     })
   },
 
-  onReady() {
-    Notify('左划单元格删除已添加的歌词')
-  },
-
   onShareAppMessage() {
     const _this = this
     return {
@@ -38,70 +34,29 @@ Page({
     }
   },
 
-  onShow() {
-    if (this.data._id != null) {
-      //查询歌单内容
-      const _this = this
-      db.collection('lyriclist').doc(_this.data._id).get({
-        success(res) {
-          // console.log(res)
-          _this.setData({
-            title: res.data.title,
-            desc: res.data.desc,
-            owner: res.data._openid,
-						imageUrl: null
-          })
-          if (res.data.pic) {
-
-            //换取真是地址
-            wx.cloud.getTempFileURL({
-							fileList: [{
-								fileID: res.data.pic,
-								// maxAge: 1
-							}],
-              success(res) {
-								// console.log(res)
-                if (res.errMsg == 'cloud.getTempFileURL:ok') {
-                  _this.setData({
-										imageUrl: res.fileList[0].tempFileURL + '?&t=' + dayjs().unix()
-                  })
-                  console.log('address:', _this.data.imageUrl)
-                }
-
-              }
-            })
-          }
-          if (res.data.lyrics) {
-            _this.setData({
-              lyrics: res.data.lyrics
-            })
-            db.collection('lyrics').where({
-                _id: _.in(res.data.lyrics)
-              })
-              .limit(limit)
-              .get({
-                success(res) {
-                  // console.log(res)
-                  _this.setData({
-                    list: res.data,
-                    offset: res.data.length,
-                    tip: res.data.length > 0 ? '' : '暂时没有数据'
-                  })
-                  // console.log('offset:', _this.data.offset)
-                }
-              })
-          }
-        }
-      })
-    }
-  },
-
   onReady() {
     this.setData({
       openid: getApp().globalData.openid
     })
-
+		Notify('左划单元格删除已添加的歌词')
+		wx.startPullDownRefresh({
+			success: function(res) {},
+			fail: function(res) {},
+			complete: function(res) {},
+		})
   },
+
+	onShow(){
+		if(getApp().globalData.refresh){
+			wx.startPullDownRefresh({
+				success: function(res) {
+					getApp().globalData.refresh = false
+				},
+				fail: function(res) {},
+				complete: function(res) {},
+			})
+		}
+	},
 
   onReachBottom() {
     const _this = this
@@ -128,7 +83,64 @@ Page({
   },
 
   onPullDownRefresh() {
-    wx.stopPullDownRefresh()
+		if (this.data._id != null) {
+			//查询歌单内容
+			const _this = this
+			db.collection('lyriclist').doc(_this.data._id).get({
+				success(res) {
+					// console.log(res)
+					_this.setData({
+						title: res.data.title,
+						desc: res.data.desc,
+						owner: res.data._openid,
+						imageUrl: null
+					})
+					if (res.data.pic) {
+
+						//换取真是地址
+						wx.cloud.getTempFileURL({
+							fileList: [{
+								fileID: res.data.pic,
+								// maxAge: 1
+							}],
+							success(res) {
+								// console.log(res)
+								if (res.errMsg == 'cloud.getTempFileURL:ok') {
+									_this.setData({
+										imageUrl: res.fileList[0].tempFileURL + '?&t=' + dayjs().unix()
+									})
+									// console.log('address:', _this.data.imageUrl)
+								}
+
+							}
+						})
+					}
+					if (res.data.lyrics) {
+						_this.setData({
+							lyrics: res.data.lyrics
+						})
+						db.collection('lyrics').where({
+							_id: _.in(res.data.lyrics)
+						})
+							.limit(limit)
+							.get({
+								success(res) {
+									// console.log(res)
+									_this.setData({
+										list: res.data,
+										offset: res.data.length,
+										tip: res.data.length > 0 ? '' : '暂时没有数据'
+									})
+									// console.log('offset:', _this.data.offset)
+								},
+								complete(){
+									wx.stopPullDownRefresh()
+								}
+							})
+					}
+				}
+			})
+		}
   },
 
   onTapAddLyric() {

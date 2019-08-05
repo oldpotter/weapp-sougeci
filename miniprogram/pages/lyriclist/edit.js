@@ -4,6 +4,8 @@ const db = getApp().globalData.db
 const _ = db.command
 const dayjs = require('dayjs')
 const limit = 15 //一次加载的数量
+// 在页面中定义激励视频广告
+let videoAd = null
 Page({
   data: {
     _id: null, //歌单id
@@ -23,6 +25,18 @@ Page({
     this.setData({
       _id: e.id
     })
+
+		// 在页面onLoad回调事件中创建激励视频广告实例
+		if (wx.createRewardedVideoAd) {
+			videoAd = wx.createRewardedVideoAd({
+				adUnitId: 'adunit-8b2abdce1d373b34'
+			})
+			videoAd.onLoad(() => { })
+			videoAd.onError((err) => { })
+			videoAd.onClose((res) => { })
+		}
+
+
   },
 
   onShareAppMessage() {
@@ -182,7 +196,21 @@ Page({
       },
       fail(err) {
         console.error(err)
-      }
+      },
+
+			complete:{
+				// 用户触发广告后，显示激励视频广告
+				if(videoAd) {
+					videoAd.show().catch(() => {
+						// 失败重试
+						videoAd.load()
+							.then(() => videoAd.show())
+							.catch(err => {
+								console.log('激励视频 广告显示失败')
+							})
+					})
+				}
+			}
     })
   },
 

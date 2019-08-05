@@ -154,12 +154,13 @@ Page({
             _this.setData({
               loading: false
             })
+						
           }
         })
       }
     })
 
-
+		getApp().globalData.refresh = true
   },
 
   getLyric(id) {

@@ -1,4 +1,7 @@
 const limit = 10 //一次加载的数量
+// 在页面中定义插屏广告
+let interstitialAd = null
+let showAd = true
 Page({
   data: {
     offset: 0,
@@ -7,34 +10,43 @@ Page({
     tip: ''
   },
 
-  onShow() {
-		wx.startPullDownRefresh({
-			success: function(res) {
-			},
-			fail: function(res) {},
-			complete: function(res) {},
-		})
+  onLoad() {
+		getApp().globalData.refresh = true
+    // 在页面onLoad回调事件中创建插屏广告实例
+    if (wx.createInterstitialAd) {
+      interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-36af2d060701e659'
+      })
+      interstitialAd.onLoad(() => {})
+      interstitialAd.onError((err) => {})
+      interstitialAd.onClose(() => {})
+    }
   },
 
-	onReady(){
-		// wx.startPullDownRefresh({
-		// 	success: function (res) { },
-		// 	fail: function (res) { },
-		// 	complete: function (res) { },
-		// })
-	},
+  onShow() {
+    if (getApp().globalData.refresh) {
+      wx.startPullDownRefresh({
+        success: function(res) {
+					getApp().globalData.refresh = false
+				},
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+    }
+  },
 
-	onPullDownRefresh(){
-		const _this = this
-		this.getList().then(res => {
-			_this.setData({
-				list: res,
-				offset: res.length,
-				tip: res.length > 0 ? '' : '暂时没有数据'
-			})
-			wx.stopPullDownRefresh()
-		})
-	},
+
+  onPullDownRefresh() {
+    const _this = this
+    this.getList().then(res => {
+      _this.setData({
+        list: res,
+        offset: res.length,
+        tip: res.length > 0 ? '' : '暂时没有数据'
+      })
+      wx.stopPullDownRefresh()
+    })
+  },
 
   onReachBottom() {
     const _this = this
@@ -50,6 +62,13 @@ Page({
         tip: res.length < limit ? '没有更多数据了' : '',
         offset: list.length
       })
+			// 在适合的场景显示插屏广告
+			if (showAd && interstitialAd) {
+				showAd = false
+				interstitialAd.show().catch((err) => {
+					console.error(err)
+				})
+			}
     })
   },
 
@@ -60,10 +79,12 @@ Page({
     return new Promise((resolve, reject) => {
       if (skip != 0) {
         db.collection('lyrics')
-					.where({ _openid: getApp().globalData.openid })
+          .where({
+            _openid: getApp().globalData.openid
+          })
           .limit(limit)
           .skip(skip)
-					.orderBy('date', 'desc')
+          .orderBy('date', 'desc')
           .get({
             success(res) {
               resolve(res.data)
@@ -71,9 +92,11 @@ Page({
           })
       } else {
         db.collection('lyrics')
-					.where({ _openid: getApp().globalData.openid })
+          .where({
+            _openid: getApp().globalData.openid
+          })
           .limit(limit)
-					.orderBy('date', 'desc')
+          .orderBy('date', 'desc')
           .get({
             success(res) {
               resolve(res.data)

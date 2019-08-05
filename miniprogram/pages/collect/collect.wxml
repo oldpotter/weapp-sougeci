@@ -1,10 +1,10 @@
 <!--miniprogram/pages/collect/collect.wxml-->
-<kl-search holder="搜索" static='true' url='../search/search'/>
+<kl-search holder="搜索" static='true' url='../search/search' />
 <i-cell-group>
-	<block wx:for='{{list}}' wx:for-item='song' wx:key='song._id'>
-		<i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.songId}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}&db_id={{song._id}}'>
-		<view class='light-primary' slot='footer'>{{song.artist}}</view>
-		</i-cell>
-	</block>
+  <block wx:for='{{list}}' wx:for-item='song' wx:key='song._id'>
+    <i-cell title='{{song.name}}' label='{{song.album}}' is-link url='../lyric/lyric?id={{song.songId}}&name={{song.name}}&album={{song.album}}&artist={{song.artist}}&db_id={{song._id}}'>
+      <view class='light-primary' slot='footer'>{{song.artist}}</view>
+    </i-cell>
+  </block>
 </i-cell-group>
-<i-load-more tip='{{tip}}' loading='{{loading}}'/>
+<i-load-more tip='{{tip}}' loading='{{loading}}' />

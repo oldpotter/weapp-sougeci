@@ -13,3 +13,6 @@
 </i-cell-group>
 <i-load-more tip='{{tip}}' loading='{{loading}}'/>
 <i-message id="message" />
+<block wx:if='{{ songs.length > 50 }}'>
+  <ad unit-id="adunit-431cee815aea592a"></ad>
+</block>

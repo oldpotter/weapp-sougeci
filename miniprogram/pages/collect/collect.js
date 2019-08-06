@@ -7,7 +7,9 @@ Page({
     offset: 0,
     list: [],
     loading: false,
-    tip: ''
+    tip: '',
+		showHB: true,//显示红包图片
+		showDS: false//显示打赏图片
   },
 
   onLoad() {
@@ -104,5 +106,21 @@ Page({
           })
       }
     })
-  }
+  },
+
+
+	onClickHB(){
+		this.setData({
+			showHB: !this.data.showHB,
+		})
+		wx.previewImage({
+			urls: ['cloud://prod-904dcd.7072-prod-904dcd/ds.jpeg'],
+		})
+	},
+
+	// onCloseDS(){
+	// 	this.setData({
+	// 		showDS: false
+	// 	})
+	// }
 })

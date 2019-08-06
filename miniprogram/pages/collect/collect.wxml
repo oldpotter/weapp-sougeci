@@ -8,3 +8,12 @@
   </block>
 </i-cell-group>
 <i-load-more tip='{{tip}}' loading='{{loading}}' />
+
+<view style='display: {{showHB ? "flex": "none"}};flex-direction: column; align-items:center; position: fixed; bottom: 20rpx; right: 10rpx;' bindtap='onClickHB'>
+  <image style=' width:50rpx; height: 50rpx;' src='../../images/hb.png'></image>
+  <text class="desc-text">打个赏</text>
+</view>
+
+<!-- <van-popup show="{{ showDS }}" bind:close="onCloseDS">
+<image  src="../../images/ds.jpeg" style='widht:100vw; height: 100vw'> </image>
+</van-popup> -->

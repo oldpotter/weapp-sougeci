@@ -9,7 +9,6 @@ Page({
     loading: false,
     tip: '',
 		showHB: true,//显示红包图片
-		showDS: false//显示打赏图片
   },
 
   onLoad() {
@@ -19,9 +18,6 @@ Page({
       interstitialAd = wx.createInterstitialAd({
         adUnitId: 'adunit-36af2d060701e659'
       })
-      interstitialAd.onLoad(() => {})
-      interstitialAd.onError((err) => {})
-      interstitialAd.onClose(() => {})
     }
   },
 
@@ -64,8 +60,9 @@ Page({
         tip: res.length < limit ? '没有更多数据了' : '',
         offset: list.length
       })
+			
 			// 在适合的场景显示插屏广告
-			if (showAd && interstitialAd) {
+			if (showAd && (interstitialAd != null)) {
 				showAd = false
 				interstitialAd.show().catch((err) => {
 					console.error(err)

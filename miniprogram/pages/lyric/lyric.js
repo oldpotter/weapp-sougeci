@@ -5,6 +5,7 @@ const {
   $Message
 } = require('../../components/iview/base/index.js')
 const url = debug ? 'http://192.168.31.99:5000/lyric' : 'https://shenkeling.top/lyric'
+let interstitialAd = null
 Page({
   data: {
     id: null,
@@ -21,6 +22,12 @@ Page({
   },
 
   onLoad(e) {
+		if (wx.createInterstitialAd) {
+			interstitialAd = wx.createInterstitialAd({
+				adUnitId: 'adunit-7a69be80c55fc1e3'
+			})
+		}
+
     this.setData({
       id: e.songId || e.id,
       name: e.name,
@@ -55,7 +62,13 @@ Page({
         }
       },
       fail: function(res) {},
-      complete: function(res) {},
+      complete: function(res) {
+				if (interstitialAd) {
+					interstitialAd.show().catch((err) => {
+						console.error(err)
+					})
+				}
+			},
     })
   },
 
